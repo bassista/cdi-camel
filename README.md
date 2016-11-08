@@ -63,7 +63,7 @@ You can find more details about running this [quickstart](http://fabric8.io/guid
     oc new-project development
     oc new-project testing
     oc project development
-    oc create -f quickstart-template.json
+    oc create -f quickstart-template.json -n development
     oc new-project cicd
 
 in the new project 'add to project' by importing the pipeline/pipeline.yaml file (should see the jenkins service start)
