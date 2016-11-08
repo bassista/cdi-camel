@@ -151,13 +151,6 @@
             "generic": {
               "secret": "${BUILD_SECRET}"
             }
-          },
-          {
-            "type": "ConfigChange"
-          },
-          {
-            "type": "ImageChange",
-            "imageChange": {}
           }
         ],
         "source": {
@@ -176,6 +169,7 @@
               "name": "fis-java-openshift:${BUILDER_VERSION}"
             },
             "forcePull": true,
+            "incremental": true,
             "env": [
               {
                 "name": "BUILD_LOGLEVEL",
@@ -229,12 +223,9 @@
         },
         "triggers": [
           {
-            "type": "ConfigChange"
-          },
-          {
             "type": "ImageChange",
             "imageChangeParams": {
-              "automatic": true,
+              "automatic": false,
               "containerNames": [
                 "${APP_NAME}"
               ],

@@ -57,3 +57,20 @@ Alternatively the template file can be used to create an OpenShift application t
 
 You can find more details about running this [quickstart](http://fabric8.io/guide/quickstarts/running.html) on the website. This also includes instructions how to change the Docker image user and registry.
 
+### Using with a build pipeline
+
+    oc login <OPENSHIFT MASTER>:8443
+    oc new-project development
+    oc new-project testing
+    oc project development
+    oc create -f quickstart-template.json
+    oc new-project cicd
+
+in the new project 'add to project' by importing the pipeline/pipeline.yaml file (should see the jenkins service start)
+
+    oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n development
+    oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n testing
+    oc policy add-role-to-group system:image-puller system:serviceaccounts:testing -n development
+    oc project testing
+    oc create deploymentconfig s2i-quickstart-cdi-camel --image=<DOCKER_REGISTRY_IP>:5000/development/s2i-quickstart-cdi-camel:promoteToQA
+
